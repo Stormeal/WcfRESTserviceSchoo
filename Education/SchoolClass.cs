@@ -8,6 +8,7 @@ namespace Education
 {
     public class SchoolClass
     {
+        public int Id { get; set; }
         public string SchoolClassId { get; set; }
         public string SchoolClassName { get; set; }
         public string Address { get; set; }

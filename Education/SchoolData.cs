@@ -45,11 +45,11 @@ namespace Education
 
         public static List<SchoolClass> SchoolClasses { get; } = new List<SchoolClass>
         {
-            new SchoolClass { SchoolClassId = "3a", SchoolClassName = "Ro31Easj", Address = "Jernbanegade" },
-            new SchoolClass { SchoolClassId = "3b", SchoolClassName = "ro16da2b3-3b", Address = "Jernbanegade" },
-            new SchoolClass { SchoolClassId = "3o", SchoolClassName = "ro16cs2o3-3o", Address = "Jernbanegade" },
-            new SchoolClass { SchoolClassId = "2a", SchoolClassName = "Ro21Easj", Address = "Elisagårdsvej" },
-            new SchoolClass { SchoolClassId = "1b", SchoolClassName = "Ro1Easj", Address = "Maglegårdsvej" },
+            new SchoolClass {Id = 1, SchoolClassId = "3a", SchoolClassName = "Ro31Easj", Address = "Jernbanegade" },
+            new SchoolClass {Id = 2, SchoolClassId = "3b", SchoolClassName = "ro16da2b3-3b", Address = "Jernbanegade" },
+            new SchoolClass {Id = 3, SchoolClassId = "3o", SchoolClassName = "ro16cs2o3-3o", Address = "Jernbanegade" },
+            new SchoolClass {Id = 4, SchoolClassId = "2a", SchoolClassName = "Ro21Easj", Address = "Elisagårdsvej" },
+            new SchoolClass {Id = 5, SchoolClassId = "1b", SchoolClassName = "Ro1Easj", Address = "Maglegårdsvej" },
         };
 
         public static List<TeacherClass> TeacherClasses { get; } = new List<TeacherClass>

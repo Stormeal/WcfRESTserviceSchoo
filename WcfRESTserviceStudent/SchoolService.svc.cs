@@ -13,13 +13,31 @@ namespace WcfRESTserviceStudent
         /// GET method
         /// </summary>
         /// <returns>a list of all school classes</returns>
-        public List<SchoolClass> GetSchoolClassData()
+        public List<SchoolClass> GetSchoolClassData(string nameFragment = null, string sort = null)
         {
+            List<SchoolClass> data = SchoolData.SchoolClasses;
+            if (nameFragment != null)
+                data = data.FindAll(schoolClass => schoolClass.SchoolClassName.Contains(nameFragment));
+            if (sort == null) return data;
+            sort = sort.ToLower();
+            switch (sort)
+            {
+                case "name":
+                    data.Sort((schoolClass, schoolClass1) => schoolClass.SchoolClassName.CompareTo(schoolClass1.SchoolClassName));
+                    return data;
+                case "sc_id":
+                    data.Sort((schoolClass, schoolClass1) => schoolClass.SchoolClassId.CompareTo(schoolClass1.SchoolClassId));
+                    return data;
+                case "address":
+                    data.Sort((schoolClass, schoolClass1) => schoolClass.Address.CompareTo(schoolClass1.Address));
+                    return data;
+            }
             return SchoolData.SchoolClasses;
         }
         private static List<Student> students = new List<Student>();
 
         private static int nextId = 10;
+
 
         public List<Student> GetAllStudents(string nameFragment = null, string sort = null)
         {
@@ -34,7 +52,7 @@ namespace WcfRESTserviceStudent
                     data.Sort((student, student1) => student.Name.CompareTo(student1.Name));
                     return data;
                 case "id":
-                    data.Sort((student, student1 )=> student.Id - student1.Id);
+                    data.Sort((student, student1) => student.Id - student1.Id);
                     return data;
                 case "mobilno":
                     data.Sort((student, student1) => student.MobileNo - student1.MobileNo);
@@ -65,6 +83,8 @@ namespace WcfRESTserviceStudent
             }
         }
 
+        #region Student Methods
+
         public string GetStudentNameByStudentId(string id)
         {
             int idInt = int.Parse(id);
@@ -81,7 +101,7 @@ namespace WcfRESTserviceStudent
         public Student UpdateStudent(string id, Student student)
         {
             int intId = int.Parse(id);
-            Student existingStudent = SchoolData.Students.FirstOrDefault(b => b.Id==intId);
+            Student existingStudent = SchoolData.Students.FirstOrDefault(b => b.Id == intId);
             if (existingStudent == null) return null;
             existingStudent.Name = student.Name;
             existingStudent.MobileNo = student.MobileNo;
@@ -113,6 +133,10 @@ namespace WcfRESTserviceStudent
             int idInt = int.Parse(Id);
             return SchoolData.Students.FirstOrDefault(student => student.Id == idInt);
         }
+
+        #endregion
+
+        #region Teacher Methods
 
         public IEnumerable<Teacher> GetTeachersByName(string nameFragment)
         {
@@ -180,5 +204,44 @@ namespace WcfRESTserviceStudent
             if (teacher.Salary != null) existingTeacher.Salary = teacher.Salary;
             return existingTeacher;
         }
-    }
+
+        #endregion
+
+        public SchoolClass GetClassDataFromId(string id)
+        {
+            int idNumber = int.Parse(id);
+            return SchoolData.SchoolClasses.FirstOrDefault(SchoolClass => SchoolClass.Id == idNumber);
+        }
+
+        public SchoolClass AddClass(SchoolClass scClass)
+        {
+            scClass.Id = nextId++;
+            SchoolData.SchoolClasses.Add(scClass);
+            return scClass;
+
+        }
+
+
+        public SchoolClass UpdateClass(string id, SchoolClass scClass)
+        {
+            int idNumber = int.Parse(id);
+            SchoolClass exsistingClass = SchoolData.SchoolClasses.FirstOrDefault(b=> b.Id == idNumber);
+            if (exsistingClass == null) return null;
+            exsistingClass.Id = scClass.Id;
+            exsistingClass.Address = scClass.Address;
+            exsistingClass.SchoolClassId = scClass.SchoolClassId;
+            exsistingClass.SchoolClassName = scClass.SchoolClassName;
+            return exsistingClass;
+        }
+
+        public SchoolClass DeleteClass(string id)
+        {
+            SchoolClass scClass = GetClassDataFromId(id);
+            if (scClass == null) return null;
+            bool removed = SchoolData.SchoolClasses.Remove(scClass);
+            if (removed) return scClass;
+            return null;
+           
+        }
+}
 }

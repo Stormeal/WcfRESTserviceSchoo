@@ -14,13 +14,13 @@ namespace WcfRESTserviceStudent
         /// </summary>
         /// <returns>a list of all school classes</returns>
         [OperationContract]
-        [WebInvoke(Method = "GET", 
+        [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "classes")]
-        List<SchoolClass> GetSchoolClassData();
+            UriTemplate = "classes?name={nameFragment}&sort={sort}")]
+        List<SchoolClass> GetSchoolClassData(string nameFragment = null, string sort = null);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", 
+        [WebInvoke(Method = "GET",
              ResponseFormat = WebMessageFormat.Json,
              UriTemplate = "students?name={namefragment}&sort={sort}")]
         List<Student> GetAllStudents(string nameFragment = null, string sort = null);
@@ -39,10 +39,15 @@ namespace WcfRESTserviceStudent
 
         // Alternative to teachers?name={namefragment}&sort={sort}
 
+
+
+
+        #region Students{GET, PUT, POST & DELETE}
+
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Bare, 
-            UriTemplate = "students/{id}")]
+             BodyStyle = WebMessageBodyStyle.Bare,
+             UriTemplate = "students/{id}")]
         Student GetStudentById(string id);
 
         [OperationContract]
@@ -52,27 +57,29 @@ namespace WcfRESTserviceStudent
         string GetStudentNameByStudentId(string id);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", 
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Bare,
-            UriTemplate = "students/")]
+        [WebInvoke(Method = "POST",
+             RequestFormat = WebMessageFormat.Json,
+             ResponseFormat = WebMessageFormat.Json,
+             BodyStyle = WebMessageBodyStyle.Bare,
+             UriTemplate = "students/")]
         Student AddStudent(Student student);
 
         [OperationContract]
         [WebInvoke(Method = "PUT", RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Bare,
-            UriTemplate = "students/{id}")]
+             ResponseFormat = WebMessageFormat.Json,
+             BodyStyle = WebMessageBodyStyle.Bare,
+             UriTemplate = "students/{id}")]
         Student UpdateStudent(string id, Student student);
 
         [OperationContract]
         [WebInvoke(Method = "DELETE",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Bare,
-            UriTemplate = "customers/{id}"),]
+             RequestFormat = WebMessageFormat.Json,
+             ResponseFormat = WebMessageFormat.Json,
+             BodyStyle = WebMessageBodyStyle.Bare,
+             UriTemplate = "customers/{id}"),]
         Student DeleteStudent(string id);
+        #endregion
+
 
         #region Teachers{GET, PUT, POST & DELETE
 
@@ -131,8 +138,38 @@ namespace WcfRESTserviceStudent
              BodyStyle = WebMessageBodyStyle.Bare,
              UriTemplate = "teachers/{id}")]
         Teacher UpdateTeacher(string id, Teacher teacher);
+        #endregion
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "classes/{id}")]
+        SchoolClass GetClassDataFromId(string id);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+             RequestFormat = WebMessageFormat.Json,
+             ResponseFormat = WebMessageFormat.Json,
+             BodyStyle = WebMessageBodyStyle.Bare,
+             UriTemplate = "classes/")]
+        SchoolClass AddClass(SchoolClass scClass);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+             RequestFormat = WebMessageFormat.Json,
+             ResponseFormat = WebMessageFormat.Json,
+             BodyStyle = WebMessageBodyStyle.Bare,
+             UriTemplate = "classes/{id}")]
+        SchoolClass UpdateClass(string id, SchoolClass scClass);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "classes/{id}")]
+        SchoolClass DeleteClass(string id);
     }
 
 
-    #endregion
 }
